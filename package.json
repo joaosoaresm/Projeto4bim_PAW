@@ -1,0 +1,20 @@
+{
+  "name": "projeto4bim_paw",
+  "version": "1.0.0",
+  "description": "Projeto da matéria de Programação Avançada para Web, do curso técnico.\r Integrantes: João Vitor Soares de Moraes\r              Lucas Henrique Toledo Bispo\r              Pedro Dias de Oliveira",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.4"
+  }
+}
