@@ -1,12 +1,9 @@
 const express = require('express');
-
-const UserControl = require('../control/UserControl');
-
-const UserMiddleware = require('../middleware/UserMiddleware');
+const UserControl = require('../control/userControl');
+const UserMiddleware = require('../middleware/userMiddleware');
 const JWTMiddleware = require('../middleware/JWTMiddleware');
 
 module.exports = class UserRouter {
-
     constructor() {
         this._router = express.Router();
         this._jwtMiddleware = new JWTMiddleware();
@@ -36,8 +33,10 @@ module.exports = class UserRouter {
 
         this.router.post('/',
             this.jwtMiddleware.validate,
-            this.userMiddleware.validateUserData,
-            this.userMiddleware.isUniqueUser,
+            this.userMiddleware.validarNomeUsuario,
+            this.userMiddleware.validarSenha,
+            this.userMiddleware.validarEmail,
+            this.userMiddleware.isUserByEmail,
             this.userControl.create
         );
 
@@ -48,6 +47,9 @@ module.exports = class UserRouter {
 
         this.router.put('/:idUser',
             this.jwtMiddleware.validate,
+            this.userMiddleware.validarNomeUsuario,
+            this.userMiddleware.validarSenha,
+            this.userMiddleware.validarEmail,
             this.userControl.update
         );
 
