@@ -1,6 +1,6 @@
 const express = require('express');
-const User = require('../modelss/user');
-const TokenJWT = require('../modelss/MeuTokenJWT');
+const User = require('../models/user');
+const TokenJWT = require('../models/MeuTokenJWT');
 const bcrypt = require('bcrypt');
 
 module.exports = class LoginControl {

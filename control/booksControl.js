@@ -1,5 +1,5 @@
 const express = require('express');
-const books = require('../modelss/books');
+const books = require('../models/books');
 
 module.exports = class booksControl {
     async create(request, response) {

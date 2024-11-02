@@ -1,5 +1,5 @@
 const express = require('express');
-const Loan = require('../modelss/loan');
+const Loan = require('../models/loan');
 
 module.exports = class LoanControl {
     async create(request, response) {

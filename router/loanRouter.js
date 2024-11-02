@@ -14,15 +14,6 @@ module.exports = class LoanRouter {
     }
 
     createRoutes() {
-        const multer = require('multer');
-        const upload = multer({ dest: 'uploads/' });
-
-        this.router.post('/csv',
-            this.jwtMiddleware.validate,
-            upload.single('loanFile'),  // nome da variável para o upload do arquivo CSV
-            this.loanControl.createByCSV
-        );
-
         this.router.get('/',
             this.jwtMiddleware.validate,
             this.loanControl.readAll

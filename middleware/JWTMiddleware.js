@@ -1,4 +1,4 @@
-const MeuTokenJWT = require('../modelss/MeuTokenJWT');
+const MeuTokenJWT = require('../models/MeuTokenJWT');
 
 module.exports = class JwtMiddleware {
 

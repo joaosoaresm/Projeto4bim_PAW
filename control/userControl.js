@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../modelss/user');
+const User = require('../models/user');
 
 module.exports = class UserControl {
     async create(request, response) {

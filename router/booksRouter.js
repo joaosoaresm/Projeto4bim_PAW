@@ -1,10 +1,9 @@
 const express = require('express');
-
 const booksControl = require('../control/booksControl');
 const booksMiddleware = require('../middleware/booksMiddleware');
 const JWTMiddleware = require('../middleware/JWTMiddleware');
 
-module.exports = class booksRouter {
+module.exports = class BooksRouter {
     constructor() {
         this._router = express.Router();
         this._jwtMiddleware = new JWTMiddleware();
@@ -13,15 +12,6 @@ module.exports = class booksRouter {
     }
 
     createRoutes() {
-        const multer = require('multer');
-        const upload = multer({ dest: 'uploads/' });
-
-        this.router.post('/csv',
-            this.jwtMiddleware.validate,
-            upload.single('booksFile'),  // nome da variável para o upload do arquivo CSV
-            this.booksControl.createByCSV
-        );
-
         this.router.get('/',
             this.jwtMiddleware.validate,
             this.booksControl.readAll
@@ -54,7 +44,7 @@ module.exports = class booksRouter {
             this.booksControl.update
         );
 
-        return this.router;
+        return this._router;
     }
 
     get router() {

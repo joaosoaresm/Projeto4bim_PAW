@@ -12,15 +12,6 @@ module.exports = class UserRouter {
     }
 
     createRoutes() {
-        const multer = require('multer');
-        const upload = multer({ dest: 'uploads/' });
-
-        this.router.post('/csv',
-            this.jwtMiddleware.validate,
-            upload.single('userFile'),
-            this.userControl.createByCSV
-        );
-
         this.router.get('/',
             this.jwtMiddleware.validate,
             this.userControl.readAll
