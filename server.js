@@ -17,6 +17,23 @@ const loginRouter = new LoginRouter();
 module.exports = class Server {
     constructor() {    
         app.use(express.json());
+
+        app.post('/register', async (req, res) => {
+            const { email, password, name } = req.body; // Dados recebidos na requisição
+        
+            user._email = email;
+            user._password = password;
+            user._name = name;
+        
+            const success = await user.create();
+        
+            if (success) {
+                res.status(201).send({ message: 'Usuário cadastrado com sucesso!' });
+            } else {
+                res.status(500).send({ message: 'Erro ao cadastrar usuário.' });
+            }
+        });
+
     
         app.use(express.static(path.join(__dirname, 'view'))); // Configura a pasta 'view' como estática
         app.use('/login',
@@ -41,5 +58,3 @@ module.exports = class Server {
         }); 
     }
 }
-
-

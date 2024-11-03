@@ -89,18 +89,19 @@ class User {
         }
     }
 
-    async readByEmail() {
+    async readById() {
         const conexao = Banco.getConexao();
-        const SQL = 'SELECT * FROM user WHERE email = ?;';
-
+        const SQL = 'SELECT * FROM user WHERE id = ?;';
+    
         try {
-            const [rows] = await conexao.promise().execute(SQL, [this._email]);
+            const [rows] = await conexao.promise().execute(SQL, [this._id]);
             return rows;
         } catch (error) {
-            console.error('Erro ao ler user pelo email:', error);
+            console.error('Erro ao ler user pelo ID:', error);
             return null;
         }
     }
+    
 
     get id() {
         return this._id;

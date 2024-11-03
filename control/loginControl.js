@@ -11,6 +11,21 @@ module.exports = class LoginControl {
 
         const loggedIn = await user.readByEmail();
 
+        console.log("Resultado da consulta:", loggedIn);
+
+        if (loggedIn && loggedIn.length > 0) {
+            const senhaCorreta = await bcrypt.compare(user.password, loggedIn[0].password);
+            console.log("Senha correta:", senhaCorreta);
+
+            if (senhaCorreta) {
+                // Código para login bem-sucedido
+            } else {
+                console.log("A senha está incorreta.");
+            }
+        } else {
+            console.log("Usuário não encontrado.");
+        }
+
         if (loggedIn && loggedIn.length > 0 && await bcrypt.compare(user.password, loggedIn[0].password)) {
             const payloadToken = {
                 id: loggedIn[0].id, // Assumindo que o ID do usuário está em loggedIn[0].id
