@@ -3,8 +3,7 @@ const express = require('express');
 const LoginControl = require('../control/loginControl');
 
 
-module.exports = class LoginRouter {
-  
+module.exports = class LoginRouter { 
     constructor() {
         
         this._router = express.Router();
