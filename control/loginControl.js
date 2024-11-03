@@ -6,31 +6,18 @@ const bcrypt = require('bcrypt');
 module.exports = class LoginControl {
     async login(request, response) {
         const user = new User();
-        user.email = request.body.user.email;
-        user.password = request.body.user.password;
+        user.email = request.body.email;
+        user.password = request.body.password;
 
-        const loggedIn = await user.readByEmail();
+        const loggedIn = await user.login();
 
         console.log("Resultado da consulta:", loggedIn);
 
-        if (loggedIn && loggedIn.length > 0) {
-            const senhaCorreta = await bcrypt.compare(user.password, loggedIn[0].password);
-            console.log("Senha correta:", senhaCorreta);
-
-            if (senhaCorreta) {
-                // Código para login bem-sucedido
-            } else {
-                console.log("A senha está incorreta.");
-            }
-        } else {
-            console.log("Usuário não encontrado.");
-        }
-
-        if (loggedIn && loggedIn.length > 0 && await bcrypt.compare(user.password, loggedIn[0].password)) {
+        if (loggedIn) {
             const payloadToken = {
-                id: loggedIn[0].id, // Assumindo que o ID do usuário está em loggedIn[0].id
-                email: loggedIn[0].email,
-                name: loggedIn[0].name
+                id: loggedIn.id, // Assumindo que o ID do usuário está em loggedIn[0].id
+                email: loggedIn.email,
+                name: loggedIn.name
             };
 
             const jwt = new TokenJWT();
@@ -41,9 +28,9 @@ module.exports = class LoginControl {
                 cod: 1,
                 msg: 'Logado com sucesso',
                 user: {
-                    id: loggedIn[0].id,
-                    name: loggedIn[0].name,
-                    email: loggedIn[0].email
+                    id: loggedIn.id,
+                    name: loggedIn.name,
+                    email: loggedIn.email
                 },
                 token: tokenString
             };

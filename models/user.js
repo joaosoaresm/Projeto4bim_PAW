@@ -76,6 +76,47 @@ class User {
         }
     }
 
+    async isUserByEmail(email) {
+        const conexao = Banco.getConexao();  // Obtém a conexão com o banco de dados.
+
+        const SQL = 'SELECT COUNT(*) AS qtd FROM user WHERE email = ?;';  
+        try {
+            const [rows] = await conexao.promise().execute(SQL, [email]);  // Executa a query.
+            return rows[0].qtd > 0;  // Retorna true se houver algum email no banco
+        } catch (error) {
+            console.error('Erro ao verificar o email:', error);  // Exibe erro no console se houver falha.
+            return false;  // Retorna false caso ocorra um erro.
+        }
+    }
+
+    async login() {
+        const conexao = Banco.getConexao();
+        const SQL = `SELECT * FROM user WHERE email = ?;`;
+    
+        try {
+            // Executa a consulta para buscar o usuário pelo email
+            const [rows] = await conexao.promise().execute(SQL, [this._email]);
+    
+            if (rows.length > 0) {
+                const user = rows[0];
+    
+                // Compara a senha fornecida com o hash armazenado no banco de dados
+                const senhaValida = await bcrypt.compare(this._password, user.password);
+    
+                if (senhaValida) {
+                    return user; // Login bem-sucedido
+                } else {
+                    return false; // Senha incorreta
+                }
+            }
+    
+            return false; // Email não encontrado
+        } catch (error) {
+            console.error('Erro ao realizar o login:', error);
+            return false;
+        }
+    }
+
     async readAll() {
         const conexao = Banco.getConexao();
         const SQL = 'SELECT * FROM user ORDER BY name;';

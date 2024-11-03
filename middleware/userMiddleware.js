@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 module.exports = class UserMiddleware {
     async validarNomeUsuario(request, response, next) {
-        const nomeUsuario = request.body.user.name;
+        const nomeUsuario = request.body.name;
 
         if (nomeUsuario.length < 3) {
             const objResposta = {
@@ -16,16 +16,16 @@ module.exports = class UserMiddleware {
     }
 
     async validarSenha(request, response, next) {
-        const senhaUsuario = request.body.user.password;
+        const senhaUsuario = request.body.password;
 
         const regexCaracteresEspeciais = /[!@#$%^&*(),.?":{}|<>]/;
 
         let temLetra = false;
 
-        if (senhaUsuario.length < 8) {
+        if (senhaUsuario.length < 6) {
             const objResposta = {
                 status: false,
-                msg: "A senha deve ter pelo menos 8 caracteres."
+                msg: "A senha deve ter pelo menos 6 caracteres."
             };
             return response.status(400).send(objResposta);
         }
@@ -38,8 +38,8 @@ module.exports = class UserMiddleware {
             return response.status(400).send(objResposta);
         }
         
-        for (let i = 0; i < senha.length; i++) {
-            if (isNaN(senha[i])) {  // isNaN verifica se o caractere não é um número
+        for (let i = 0; i < senhaUsuario.length; i++) {
+            if (isNaN(senhaUsuario[i])) {  // isNaN verifica se o caractere não é um número
                 temLetra = true;
                 break;
             }
@@ -56,7 +56,7 @@ module.exports = class UserMiddleware {
     }
 
     async validarEmail(request, response, next) {
-        const emailUsuario = request.body.user.email;
+        const emailUsuario = request.body.email;
 
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regexEmail.test(emailUsuario)) {
@@ -70,22 +70,21 @@ module.exports = class UserMiddleware {
         next();
     }
 
-    async isUserByEmail(request, response, next) {
-        const emailUsuario = request.body.user.email;
+    async isNotEmailCadastrado(request, response, next) {
+        const email = request.body.email;
         const user = new User();
-        user.email = emailUsuario;
+        const is = await user.isUserByEmail(email);
 
-        const userExists = await user.readByEmail();
-
-        if (userExists) {
+        if (is == false) {
+            next();
+        } else {
             const objResposta = {
                 status: false,
-                msg: "Já existe um usuário cadastrado com esse email."
-            };
-            return response.status(400).send(objResposta);
-        }
+                msg: "Já existe um usuário cadastrado com este e-mail"
+            }
 
-        next();
+            response.status(400).send(objResposta);
+        }
     }
 
 };

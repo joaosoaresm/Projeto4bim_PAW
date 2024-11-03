@@ -22,12 +22,16 @@ module.exports = class UserRouter {
             this.userControl.readById
         );
 
-        this.router.post('/',
+        this.router.get('email/:email',
             this.jwtMiddleware.validate,
+            this.userControl.readById
+        );
+ 
+        this.router.post('/',
             this.userMiddleware.validarNomeUsuario,
             this.userMiddleware.validarSenha,
             this.userMiddleware.validarEmail,
-            this.userMiddleware.isUserByEmail,
+            this.userMiddleware.isNotEmailCadastrado,
             this.userControl.create
         );
 

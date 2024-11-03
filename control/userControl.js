@@ -4,17 +4,17 @@ const User = require('../models/user');
 module.exports = class UserControl {
     async create(request, response) {
         var user = new User();
-        user.email = request.body.user.email;
-        user.password = request.body.user.password;
-        user.name = request.body.user.name;
-
+        user.email = request.body.email;
+        user.password = request.body.password;
+        user.name = request.body.name;
+        
         const isCreated = await user.create();
         const objResposta = {
-            cod: 1,
+            cod: user.id,
             status: isCreated,
             msg: isCreated ? 'Usuário criado com sucesso' : 'Erro ao criar o usuário'
         };
-        response.status(200).send(objResposta);
+        response.status(isCreated ? 201 : 400).send(objResposta);
     }
 
     async delete(request, response) {
@@ -27,13 +27,13 @@ module.exports = class UserControl {
             status: isDeleted,
             msg: isDeleted ? 'Usuário excluído com sucesso' : 'Erro ao excluir o usuário'
         };
-        response.status(200).send(objResposta);
+        response.status(isDeleted ? 200 : 404).send(objResposta);
     }
 
     async update(request, response) {
         var user = new User();
         user.id = request.params.id;
-        user.name = request.body.user.name;
+        user.name = request.body.name;
 
         const isUpdated = await user.update();
         const objResposta = {
@@ -41,7 +41,7 @@ module.exports = class UserControl {
             status: isUpdated,
             msg: isUpdated ? 'Usuário atualizado com sucesso' : 'Erro ao atualizar o usuário'
         };
-        response.status(200).send(objResposta);
+        response.status(isUpdated ? 200 : 404).send(objResposta)
     }
 
     async readAll(request, response) {
@@ -65,8 +65,8 @@ module.exports = class UserControl {
             cod: 1,
             status: true,
             msg: resultado ? 'Usuário encontrado' : 'Usuário não encontrado',
-            user: resultado ? await user.readByEmail() : null
+            user: resultado ? await user.readById() : null
         };
-        response.status(200).send(objResposta);
+        response.status(resultado ? 200 : 404).send(objResposta);
     }
 };

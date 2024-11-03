@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrapper">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p class="toggle-text">Don't have an account? <span id="showRegister">Register here</span></p>
+        </div>
+
+        <div class="form-wrapper hidden" id="registerWrapper">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="input-group">
+                    <label for="emailRegister">Email</label>
+                    <input type="email" id="emailRegister" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="passwordRegister">Password</label>
+                    <input type="password" id="passwordRegister" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p class="toggle-text">Already have an account? <span id="showLogin">Login here</span></p>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

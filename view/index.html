@@ -31,11 +31,11 @@
     </div>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', async (event) => {
+        document.login('login-form').addEventListener('submit', async (event) => {
             event.preventDefault(); // Previne o envio padrão do formulário
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.login('email').value;
+            const password = document.login('password').value;
 
             try {
                 const response = await fetch('/login', {
@@ -49,14 +49,14 @@
                 if (data.status) {
                     // Salva o token JWT no localStorage
                     localStorage.setItem('token', data.token);
-                    document.getElementById('login-message').innerText = 'Login bem-sucedido!';
+                    document.login('login-message').innerText = 'Login bem-sucedido!';
                     // Aqui você pode redirecionar para a página principal
                 } else {
-                    document.getElementById('login-message').innerText = data.msg || 'Erro no login.';
+                    document.login('login-message').innerText = data.msg || 'Erro no login.';
                 }
             } catch (error) {
                 console.error('Erro na requisição de login:', error);
-                document.getElementById('login-message').innerText = 'Erro na requisição de login.';
+                document.login('login-message').innerText = 'Erro na requisição de login.';
             }
         });
     </script>

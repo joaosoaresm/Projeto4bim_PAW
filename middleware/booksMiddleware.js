@@ -2,7 +2,7 @@ const books = require('../models/books');
 
 module.exports = class booksMiddleware {
     async validarNomeLivro(request, response, next) {
-        const nomeLivro = request.body.books.title;
+        const nomeLivro = request.body.title;
 
         if (nomeLivro.length < 3) {
             return response.status(400).json({
@@ -15,7 +15,7 @@ module.exports = class booksMiddleware {
     }
 
     async validarAutor(request, response, next) {
-        const autorLivro = request.body.books.author;
+        const autorLivro = request.body.author;
 
         if (!autorLivro || autorLivro.length < 3) {
             const objResposta = {
@@ -29,7 +29,7 @@ module.exports = class booksMiddleware {
     }
 
     async validarDisponibilidade(request, response, next) {
-        const disponibilidade = request.body.books.availability;
+        const disponibilidade = request.body.availability;
 
         if (disponibilidade !== 0 && disponibilidade !== 1) {
             return response.status(400).json({
@@ -42,7 +42,7 @@ module.exports = class booksMiddleware {
     }
 
     async isUniquebooks(request, response, next) {
-        const nomeLivro = request.body.books.title;
+        const nomeLivro = request.body.title;
         const books = new books();
         books.title = nomeLivro;
 

@@ -4,7 +4,7 @@ const books = require('../models/books'); // Supondo que você tenha um modelso 
 
 module.exports = class LoanMiddleware {
     async validarLoanData(request, response, next) {
-        const { loanLeft, loanReturn, userId, booksId } = request.body.loan;
+        const { loanLeft, loanReturn, userId, booksId } = request.body;
 
         if (!loanLeft || !loanReturn || !userId || !booksId) {
             return response.status(400).json({
@@ -17,7 +17,7 @@ module.exports = class LoanMiddleware {
     }
 
     async isUserExists(request, response, next) {
-        const userId = request.body.loan.userId;
+        const userId = request.body.userId;
         const user = new User();
         
         const userExists = await user.isUserById(userId); // Presumindo que você tenha um método para verificar a existência do usuário
@@ -32,7 +32,7 @@ module.exports = class LoanMiddleware {
     }
 
     async isbooksExists(request, response, next) {
-        const booksId = request.body.loan.booksId;
+        const booksId = request.body.booksId;
         const books = new books();
         
         const booksExists = await books.isbooksById(booksId); // Presumindo que você tenha um método para verificar a existência do livro
@@ -47,8 +47,8 @@ module.exports = class LoanMiddleware {
     }
 
     async isUniqueLoan(request, response, next) {
-        const userId = request.body.loan.userId;
-        const booksId = request.body.loan.booksId;
+        const userId = request.body.userId;
+        const booksId = request.body.booksId;
         const loan = new Loan();
         
         // Presumindo que você tenha um método para verificar se o empréstimo já existe para o mesmo usuário e livro
@@ -59,7 +59,6 @@ module.exports = class LoanMiddleware {
                 msg: "Este livro já está emprestado para este usuário."
             });
         }
-
         next();
     }
 };

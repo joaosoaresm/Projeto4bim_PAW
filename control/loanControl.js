@@ -4,10 +4,10 @@ const Loan = require('../models/loan');
 module.exports = class LoanControl {
     async create(request, response) {
         var loan = new Loan();
-        loan.loanLeft = request.body.loan.loanLeft;
-        loan.loanReturn = request.body.loan.loanReturn;
-        loan.userId = request.body.loan.userId;
-        loan.booksId = request.body.loan.booksId;
+        loan.loanLeft = request.body.loanLeft;
+        loan.loanReturn = request.body.loanReturn;
+        loan.userId = request.body.userId;
+        loan.booksId = request.body.booksId;
 
         const isCreated = await loan.create();
         const objResposta = {
@@ -34,10 +34,10 @@ module.exports = class LoanControl {
     async update(request, response) {
         var loan = new Loan();
         loan.id = request.params.id;
-        loan.loanLeft = request.body.loan.loanLeft;
-        loan.loanReturn = request.body.loan.loanReturn;
-        loan.userId = request.body.loan.userId;
-        loan.booksId = request.body.loan.booksId;
+        loan.loanLeft = request.body.loanLeft;
+        loan.loanReturn = request.body.loanReturn;
+        loan.userId = request.body.userId;
+        loan.booksId = request.body.booksId;
 
         const isUpdated = await loan.update();
         const objResposta = {

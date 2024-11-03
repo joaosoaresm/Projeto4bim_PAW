@@ -4,9 +4,9 @@ const books = require('../models/books');
 module.exports = class booksControl {
     async create(request, response) {
         var books = new books();
-        books.title = request.body.books.title;
-        books.author = request.body.books.author;
-        books.available = request.body.books.available;
+        books.title = request.body.title;
+        books.author = request.body.author;
+        books.available = request.body.available;
 
         const isCreated = await books.create();
         const objResposta = {
@@ -33,9 +33,9 @@ module.exports = class booksControl {
     async update(request, response) {
         var books = new books();
         books.id = request.params.id;
-        books.title = request.body.books.title;
-        books.author = request.body.books.author;
-        books.available = request.body.books.available;
+        books.title = request.body.title;
+        books.author = request.body.author;
+        books.available = request.body.available;
 
         const isUpdated = await books.update();
         const objResposta = {

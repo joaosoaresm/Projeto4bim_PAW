@@ -35,7 +35,7 @@ module.exports = class Server {
         });
 
     
-        app.use(express.static(path.join(__dirname, 'view'))); // Configura a pasta 'view' como estática
+        app.use(express.static(path.join(__dirname, '/view/login'))); // Configura a pasta 'view' como estática
         app.use('/login',
             loginRouter.createRoutes()
         );
