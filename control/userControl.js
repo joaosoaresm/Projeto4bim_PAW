@@ -19,7 +19,7 @@ module.exports = class UserControl {
 
     async delete(request, response) {
         var user = new User();
-        user.id = request.params.id;
+        user.id = request.params.idUser;
 
         const isDeleted = await user.delete();
         const objResposta = {
@@ -32,8 +32,10 @@ module.exports = class UserControl {
 
     async update(request, response) {
         var user = new User();
-        user.id = request.params.id;
+        user.id = request.params.idUser;
         user.name = request.body.name;
+        user.email = request.body.email;
+        user.password = request.body.password;
 
         const isUpdated = await user.update();
         const objResposta = {

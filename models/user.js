@@ -39,10 +39,13 @@ class User {
 
     async update() {
         const conexao = Banco.getConexao();
-        const SQL = 'UPDATE user SET name = ? WHERE id = ?;';
+        const SQL = 'UPDATE user SET name = ?, password = ?, email = ? WHERE id = ?;';
 
         try {
-            const [result] = await conexao.promise().execute(SQL, [this._name, this._id]);
+            const hashedPassword = await bcrypt.hash(this._password, 10);
+            const [result] = await conexao.promise().execute(SQL, [
+                this._name, hashedPassword, this._email, this._id
+            ]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error('Erro ao atualizar o user:', error);
