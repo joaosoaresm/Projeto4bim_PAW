@@ -34,8 +34,21 @@ module.exports = class Server {
             }
         });
 
-    
+
+
+        //front
         app.use(express.static(path.join(__dirname, '/view/login'))); // Configura a pasta 'view' como estática
+        
+        app.use('/user-list',
+            express.static(path.join(__dirname, '/view/user-list'))
+        );
+
+        app.use('/home',
+            express.static(path.join(__dirname, '/view/home'))
+        );
+        
+        
+        //back
         app.use('/login',
             loginRouter.createRoutes()
         );
@@ -50,10 +63,6 @@ module.exports = class Server {
     
         app.use('/loan',
             loanRouter.createRoutes()
-        );
-
-        app.use('/home',
-            express.static(path.join(__dirname, '/view/home'))
         );
     }
     iniciar = () => {
