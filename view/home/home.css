@@ -1,0 +1,90 @@
+/* Estilos Gerais */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    color: #333;
+}
+
+/* Cabeçalho com Logo */
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+/* Conteúdo Principal */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Menu de Rodapé */
+.footer-menu {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 0;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #4CAF50;
+    cursor: pointer;
+    position: relative;
+}
+
+.menu-item svg {
+    width: 24px;
+    height: 24px;
+    transition: color 0.3s ease;
+}
+
+.menu-item:hover svg {
+    color: #2d7f35;
+}
+
+.menu-item:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 35px;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.menu-item::after {
+    opacity: 0;
+}

@@ -51,6 +51,10 @@ module.exports = class Server {
         app.use('/loan',
             loanRouter.createRoutes()
         );
+
+        app.use('/home',
+            express.static(path.join(__dirname, '/view/home'))
+        );
     }
     iniciar = () => {
         app.listen(portaServico, () => {
