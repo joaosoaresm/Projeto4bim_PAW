@@ -27,17 +27,17 @@ body {
 }
 
 /* Estilo do Conteúdo Principal */
-.user-list {
+.book-list {
     padding: 20px;    
     padding-bottom: 80px;
 }
 
-.user-list h2 {
+.book-list h2 {
     color: #333;
 }
 
 /* Estilo da Tabela */
-#usersTable {
+#booksTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -45,13 +45,13 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-#usersTable th, #usersTable td {
+#booksTable th, #booksTable td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }
 
-#usersTable th {
+#booksTable th {
     background-color: #f2f2f2;
 }
 
@@ -118,4 +118,14 @@ body {
 
 .back-button:hover {
     background-color: #3f3f3f;
+}
+
+.link {
+    text-decoration: none;
+    color: #3f5cff;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    cursor: pointer;
 }

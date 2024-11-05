@@ -44,6 +44,8 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
 
         if (data.status) {
             localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
             alert('Login bem-sucedido!');
             window.location.href = '/home';
         } else {

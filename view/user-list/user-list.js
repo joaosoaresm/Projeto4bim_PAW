@@ -39,7 +39,6 @@ window.onload = async function() {
 };
 
 // Logout function
-document.getElementById('logoutButton').addEventListener('click', () => {
-    localStorage.removeItem('token'); // Remove o token
-    window.location.href = '/'; // Redireciona para a página de login
+document.getElementById('backButton').addEventListener('click', () => {
+    window.location.href = '/home';
 });

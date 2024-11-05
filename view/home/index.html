@@ -29,7 +29,7 @@
 
     <!-- Menu de Rodapé -->
     <footer class="footer-menu">
-        <div class="menu-item" data-tooltip="Cadastrar Livro">
+        <div id="addBookButton" class="menu-item" data-tooltip="Cadastrar Livro">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2v20"></path>
                 <path d="M5 9h14"></path>
@@ -44,7 +44,7 @@
                 <path d="M12 13v6"></path>
             </svg>
         </div>
-        <div class="menu-item" data-tooltip="Ver Todos os Livros">
+        <div id="listBooksButton" class="menu-item" data-tooltip="Ver Todos os Livros">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 12h18"></path>
                 <path d="M3 6h18"></path>
@@ -64,6 +64,33 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 6v6l4 2"></path>
             </svg>
+        </div>
+        <!-- Botão de Gerenciamento de Usuário -->
+        <div class="menu-item" data-tooltip="Manage User" id="manageUserButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
+        <!-- Menu de Opções do Gerenciamento de Usuário -->
+        <div id="userOptionsMenu" class="user-options hidden-button">
+            <button id="updateUserButton">Update User</button>
+            <button id="deleteUserButton">Delete User</button>
+        </div>
+        <div id="updateUserModal" class="modal hidden-modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close-button">&times;</span>
+                <h2>Update User</h2>
+                <form id="updateUserForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">OK</button>
+                </form>
+            </div>
         </div>
     </footer>
     <script src="home.js"></script>
