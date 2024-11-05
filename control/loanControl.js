@@ -7,7 +7,7 @@ module.exports = class LoanControl {
         loan.loanLeft = request.body.loanLeft;
         loan.loanReturn = request.body.loanReturn;
         loan.userId = request.body.userId;
-        loan.booksId = request.body.booksId;
+        loan.bookId = request.body.bookId;
 
         const isCreated = await loan.create();
         const objResposta = {
@@ -20,7 +20,7 @@ module.exports = class LoanControl {
 
     async delete(request, response) {
         var loan = new Loan();
-        loan.id = request.params.id;
+        loan.id = request.params.idLoan;
 
         const isDeleted = await loan.delete();
         const objResposta = {
@@ -33,11 +33,9 @@ module.exports = class LoanControl {
 
     async update(request, response) {
         var loan = new Loan();
-        loan.id = request.params.id;
+        loan.id = request.params.idLoan;
         loan.loanLeft = request.body.loanLeft;
         loan.loanReturn = request.body.loanReturn;
-        loan.userId = request.body.userId;
-        loan.booksId = request.body.booksId;
 
         const isUpdated = await loan.update();
         const objResposta = {
@@ -62,7 +60,7 @@ module.exports = class LoanControl {
 
     async readById(request, response) {
         var loan = new Loan();
-        loan.id = request.params.id;
+        loan.id = request.params.idLoan;
 
         const resultado = await loan.isLoanById(loan.id);
         const objResposta = {

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from control.booksControl import BookController  # Ajuste conforme a localização do arquivo da classe BookController
-from model.books import BookController  # Ajuste conforme a localização do arquivo da classe Book
+from model.book import BookController  # Ajuste conforme a localização do arquivo da classe Book
 
 # Cria a aplicação Flask
 app = Flask("rest_api")
@@ -10,8 +10,8 @@ def handle_validation_error(e):
     return jsonify({"erro": str(e)}), 400
 
 # Função responsável por obter todos os livros
-# Endpoint: GET /books/
-@app.route('/books/', methods=['GET'])
+# Endpoint: GET /book/
+@app.route('/book/', methods=['GET'])
 def read_all_books():
     try:
         # Instancia o controlador de Book
@@ -22,8 +22,8 @@ def read_all_books():
         return handle_validation_error(e)
 
 # Função responsável por obter um livro específico pelo ID
-# Endpoint: GET /books/<int:id>
-@app.route('/books/<int:id>', methods=['GET'])
+# Endpoint: GET /book/<int:id>
+@app.route('/book/<int:id>', methods=['GET'])
 def read_book_by_id(id):
     try:
         # Instancia o controlador de Book
@@ -36,8 +36,8 @@ def read_book_by_id(id):
         return handle_validation_error(e)
 
 # Função responsável por criar um novo livro
-# Endpoint: POST /books/
-@app.route('/books/', methods=['POST'])
+# Endpoint: POST /book/
+@app.route('/book/', methods=['POST'])
 def create_book():
     try:
         # Obtém o corpo da requisição em formato JSON
@@ -54,8 +54,8 @@ def create_book():
         return handle_validation_error(e)
 
 # Função responsável por atualizar um livro existente
-# Endpoint: PUT /books/<int:id>
-@app.route('/books/<int:id>', methods=['PUT'])
+# Endpoint: PUT /book/<int:id>
+@app.route('/book/<int:id>', methods=['PUT'])
 def update_book(id):
     try:
         # Obtém o corpo da requisição em formato JSON
@@ -73,8 +73,8 @@ def update_book(id):
         return handle_validation_error(e)
 
 # Função responsável por deletar um livro pelo ID
-# Endpoint: DELETE /books/<int:id>
-@app.route('/books/<int:id>', methods=['DELETE'])
+# Endpoint: DELETE /book/<int:id>
+@app.route('/book/<int:id>', methods=['DELETE'])
 def delete_book(id):
     try:
         # Instancia o controlador de Book

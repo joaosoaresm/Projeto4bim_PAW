@@ -26,10 +26,9 @@ module.exports = class LoanRouter {
 
         this.router.post('/',
             this.jwtMiddleware.validate,
-            this.loanMiddleware.validarLoanData,  // Corrigido para 'validarLoanData'
+            this.loanMiddleware.validarLoanData,
             this.loanMiddleware.isUserExists,
-            this.loanMiddleware.isbooksExists,  // Corrigido para 'isBooksExists'
-            this.loanMiddleware.isUniqueLoan,
+            this.loanMiddleware.isBookAvailable,
             this.loanControl.create
         );
 

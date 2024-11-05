@@ -1,14 +1,13 @@
 const express = require('express');
-const books = require('../models/books');
+const Book = require('../models/book');
 
-module.exports = class booksControl {
+module.exports = class BookControl {
     async create(request, response) {
-        var books = new books();
-        books.title = request.body.title;
-        books.author = request.body.author;
-        books.available = request.body.available;
+        var book = new Book();
+        book.title = request.body.title;
+        book.author = request.body.author;
 
-        const isCreated = await books.create();
+        const isCreated = await book.create();
         const objResposta = {
             cod: 1,
             status: isCreated,
@@ -18,10 +17,12 @@ module.exports = class booksControl {
     }
 
     async delete(request, response) {
-        var books = new books();
-        books.id = request.params.id;
+        var book = new Book();
+        const id = request.params.idBook;
 
-        const isDeleted = await books.delete();
+        console.log(request);
+
+        const isDeleted = await book.delete(id);
         const objResposta = {
             cod: 1,
             status: isDeleted,
@@ -31,13 +32,13 @@ module.exports = class booksControl {
     }
 
     async update(request, response) {
-        var books = new books();
-        books.id = request.params.id;
-        books.title = request.body.title;
-        books.author = request.body.author;
-        books.available = request.body.available;
+        var book = new Book();
+        book.id = request.params.idBook;
+        book.title = request.body.title;
+        book.author = request.body.author;
+        book.available = request.body.available;
 
-        const isUpdated = await books.update();
+        const isUpdated = await book.update();
         const objResposta = {
             cod: 1,
             status: isUpdated,
@@ -47,27 +48,27 @@ module.exports = class booksControl {
     }
 
     async readAll(request, response) {
-        var books = new books();
-        const resultado = await books.readAll();
+        var book = new Book();
+        const resultado = await book.readAll();
         const objResposta = {
             cod: 1,
             status: true,
             msg: 'Executado com sucesso',
-            bookss: resultado
+            book: resultado
         };
         response.status(200).send(objResposta);
     }
 
     async readById(request, response) {
-        var books = new books();
-        books.id = request.params.id;
+        var book = new Book();
+        const id = request.params.idBook;
 
-        const resultado = await books.isbooksById(books.id);
+        const resultado = await book.readById(id);
         const objResposta = {
             cod: 1,
             status: true,
             msg: resultado ? 'Livro encontrado' : 'Livro não encontrado',
-            books: resultado ? await books.readById() : null
+            book: resultado ? await book.readById(id) : null
         };
         response.status(200).send(objResposta);
     }

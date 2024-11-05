@@ -14,7 +14,7 @@ class Book:
         if conexao:
             try:
                 cursor = conexao.cursor()
-                sql = "INSERT INTO books (title, author, available) VALUES (%s, %s, %s)"
+                sql = "INSERT INTO book (title, author, available) VALUES (%s, %s, %s)"
                 cursor.execute(sql, (self.title, self.author, self.available))
                 conexao.commit()
                 self.id = cursor.lastrowid  # Atualiza o id após criação
@@ -30,7 +30,7 @@ class Book:
         if conexao:
             try:
                 cursor = conexao.cursor(dictionary=True)
-                sql = "SELECT * FROM books ORDER BY title ASC"
+                sql = "SELECT * FROM book ORDER BY title ASC"
                 cursor.execute(sql)
                 return cursor.fetchall()
             except Error as e:
@@ -44,7 +44,7 @@ class Book:
         if conexao:
             try:
                 cursor = conexao.cursor(dictionary=True)
-                sql = "SELECT * FROM books WHERE id = %s"
+                sql = "SELECT * FROM book WHERE id = %s"
                 cursor.execute(sql, (self.id,))
                 linhaRespostaSQL = cursor.fetchone()
                 if linhaRespostaSQL:
@@ -64,7 +64,7 @@ class Book:
         if conexao:
             try:
                 cursor = conexao.cursor()
-                sql = "UPDATE books SET title = %s, author = %s, available = %s WHERE id = %s"
+                sql = "UPDATE book SET title = %s, author = %s, available = %s WHERE id = %s"
                 cursor.execute(sql, (self.title, self.author, self.available, self.id))
                 conexao.commit()
                 return cursor.rowcount
@@ -79,7 +79,7 @@ class Book:
         if conexao:
             try:
                 cursor = conexao.cursor()
-                sql = "DELETE FROM books WHERE id = %s"
+                sql = "DELETE FROM book WHERE id = %s"
                 cursor.execute(sql, (self.id,))
                 conexao.commit()
                 qtdExcluidos = cursor.rowcount

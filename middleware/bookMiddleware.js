@@ -1,4 +1,4 @@
-const books = require('../models/books');
+const Book = require('../models/book.js');
 
 module.exports = class booksMiddleware {
     async validarNomeLivro(request, response, next) {
@@ -29,9 +29,11 @@ module.exports = class booksMiddleware {
     }
 
     async validarDisponibilidade(request, response, next) {
-        const disponibilidade = request.body.availability;
+        const available = request.body.available;
 
-        if (disponibilidade !== 0 && disponibilidade !== 1) {
+        console.log(request.body);
+
+        if (available !== 0 && available !== 1) {
             return response.status(400).json({
                 status: false,
                 msg: "A disponibilidade deve ser 0 (indisponível) ou 1 (disponível)."
@@ -41,14 +43,13 @@ module.exports = class booksMiddleware {
         next();
     }
 
-    async isUniquebooks(request, response, next) {
+    async isUniquebook(request, response, next) {
         const nomeLivro = request.body.title;
-        const books = new books();
-        books.title = nomeLivro;
+        const book = new Book();
 
-        const booksExists = await books.isbooksByTitle();
+        const bookExists = await book.isBookByTitle(nomeLivro);
 
-        if (booksExists) {
+        if (bookExists) {
             return response.status(400).json({
                 status: false,
                 msg: "Já existe um livro cadastrado com esse título."

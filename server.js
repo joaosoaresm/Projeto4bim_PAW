@@ -1,5 +1,5 @@
 const express = require('express');
-const BooksRouter = require('./router/booksRouter');
+const BookRouter = require('./router/bookRouter');
 const path = require('path');
 const UserRouter = require('./router/userRouter');
 const LoanRouter = require('./router/loanRouter');
@@ -9,7 +9,7 @@ const app = express();
 
 const portaServico = 8080;
 
-const booksRouter = new BooksRouter();
+const bookRouter = new BookRouter();
 const userRouter = new UserRouter();
 const loanRouter = new LoanRouter();
 const loginRouter = new LoginRouter();
@@ -53,8 +53,8 @@ module.exports = class Server {
             loginRouter.createRoutes()
         );
     
-        app.use('/books',
-            booksRouter.createRoutes()
+        app.use('/book',
+            bookRouter.createRoutes()
         );
     
         app.use('/user',

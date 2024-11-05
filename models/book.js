@@ -1,6 +1,6 @@
 const Banco = require('./database');
 
-class books {
+class Book {
     constructor() {
         this._id = null;
         this._title = null;
@@ -10,7 +10,7 @@ class books {
 
     async create() {
         const conexao = Banco.getConexao();
-        const SQL = 'INSERT INTO bookss (title, author) VALUES (?, ?);';
+        const SQL = 'INSERT INTO book (title, author, available) VALUES (?, ?, 1);';
 
         try {
             const [result] = await conexao.promise().execute(SQL, [this._title, this._author]);
@@ -22,12 +22,12 @@ class books {
         }
     }
 
-    async delete() {
+    async delete(id) {
         const conexao = Banco.getConexao();
-        const SQL = 'DELETE FROM bookss WHERE id = ?;';
+        const SQL = 'DELETE FROM book WHERE id = ?;';
 
         try {
-            const [result] = await conexao.promise().execute(SQL, [this._id]);
+            const [result] = await conexao.promise().execute(SQL, [id]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error('Erro ao excluir o livro:', error);
@@ -37,7 +37,7 @@ class books {
 
     async update() {
         const conexao = Banco.getConexao();
-        const SQL = 'UPDATE bookss SET title = ?, author = ?, available = ? WHERE id = ?;';
+        const SQL = 'UPDATE book SET title = ?, author = ?, available = ? WHERE id = ?;';
 
         try {
             const [result] = await conexao.promise().execute(SQL, [this._title, this._author, this._available, this._id]);
@@ -48,12 +48,12 @@ class books {
         }
     }
 
-    async isbooksByTitle() {
+    async isBookByTitle(title) {
         const conexao = Banco.getConexao();
-        const SQL = 'SELECT COUNT(*) AS qtd FROM bookss WHERE title = ?;';
+        const SQL = 'SELECT COUNT(*) AS qtd FROM book WHERE title = ?;';
 
         try {
-            const [rows] = await conexao.promise().execute(SQL, [this._title]);
+            const [rows] = await conexao.promise().execute(SQL, [title]);
             return rows[0].qtd > 0;
         } catch (error) {
             console.error('Erro ao verificar o livro:', error);
@@ -61,9 +61,9 @@ class books {
         }
     }
 
-    async isbooksById(id) {
+    async isBookById(id) {
         const conexao = Banco.getConexao();
-        const SQL = 'SELECT COUNT(*) AS qtd FROM bookss WHERE id = ?;';
+        const SQL = 'SELECT COUNT(*) AS qtd FROM book WHERE id = ?;';
 
         try {
             const [rows] = await conexao.promise().execute(SQL, [id]);
@@ -76,7 +76,7 @@ class books {
 
     async readAll() {
         const conexao = Banco.getConexao();
-        const SQL = 'SELECT * FROM bookss ORDER BY title;';
+        const SQL = 'SELECT * FROM book ORDER BY title;';
 
         try {
             const [rows] = await conexao.promise().execute(SQL);
@@ -87,15 +87,18 @@ class books {
         }
     }
 
-    async readByTitle() {
+    async readById(id) {
         const conexao = Banco.getConexao();
-        const SQL = 'SELECT * FROM bookss WHERE title = ?;';
+        const SQL = 'SELECT * FROM book WHERE id = ?;';
 
         try {
-            const [rows] = await conexao.promise().execute(SQL, [this._title]);
-            return rows;
+            const [rows] = await conexao.promise().execute(SQL, [id]);
+            if(rows.length > 0) {
+                return rows[0];
+            }
+            throw new Error('Livro não encontrado');
         } catch (error) {
-            console.error('Erro ao ler livro pelo título:', error);
+            console.error('Erro ao buscar livro:', error);
             return null;
         }
     }
@@ -137,4 +140,4 @@ class books {
     }
 }
 
-module.exports = books;
+module.exports = Book;

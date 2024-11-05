@@ -1,15 +1,15 @@
 const Loan = require('../models/loan');
 const User = require('../models/user'); // Supondo que você tenha um modelso User para verificar a existência do usuário
-const books = require('../models/books'); // Supondo que você tenha um modelso books para verificar a existência do livro
+const Book = require('../models/book'); // Supondo que você tenha um modelso book para verificar a existência do livro
 
 module.exports = class LoanMiddleware {
     async validarLoanData(request, response, next) {
-        const { loanLeft, loanReturn, userId, booksId } = request.body;
+        const { loanLeft, loanReturn, userId, bookId } = request.body;
 
-        if (!loanLeft || !loanReturn || !userId || !booksId) {
+        if (!loanLeft || !loanReturn || !userId || !bookId) {
             return response.status(400).json({
                 status: false,
-                msg: "Todos os campos (loanLeft, loanReturn, userId, booksId) são obrigatórios."
+                msg: "Todos os campos (loanLeft, loanReturn, userId, bookId) são obrigatórios."
             });
         }
 
@@ -31,34 +31,24 @@ module.exports = class LoanMiddleware {
         next();
     }
 
-    async isbooksExists(request, response, next) {
-        const booksId = request.body.booksId;
-        const books = new books();
+    async isBookAvailable(request, response, next) {
+        const bookId = request.body.bookId;
+        const book = new Book();
         
-        const booksExists = await books.isbooksById(booksId); // Presumindo que você tenha um método para verificar a existência do livro
-        if (!booksExists) {
+        const bookExists = await book.readById(bookId);
+        if (!bookExists) {
             return response.status(400).json({
                 status: false,
                 msg: "Livro não encontrado."
             });
         }
-
-        next();
-    }
-
-    async isUniqueLoan(request, response, next) {
-        const userId = request.body.userId;
-        const booksId = request.body.booksId;
-        const loan = new Loan();
-        
-        // Presumindo que você tenha um método para verificar se o empréstimo já existe para o mesmo usuário e livro
-        const loanExists = await loan.isLoanExists(userId, booksId); 
-        if (loanExists) {
+        if (bookExists.available === 0) {
             return response.status(400).json({
                 status: false,
-                msg: "Este livro já está emprestado para este usuário."
+                msg: "Livro não está disponível para empréstimo."
             });
         }
+
         next();
     }
 };

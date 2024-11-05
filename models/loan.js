@@ -6,15 +6,15 @@ class Loan {
         this._loanLeft = null;
         this._loanReturn = null;
         this._userId = null;
-        this._booksId = null;
+        this._bookId = null;
     }
 
     async create() {
         const conexao = Banco.getConexao();
-        const SQL = 'INSERT INTO loan (loan_left, loan_return, user_id, bookss_id) VALUES (?, ?, ?, ?);';
+        const SQL = 'INSERT INTO loan (loan_left, loan_return, user_id, book_id) VALUES (?, ?, ?, ?);';
 
         try {
-            const [result] = await conexao.promise().execute(SQL, [this._loanLeft, this._loanReturn, this._userId, this._booksId]);
+            const [result] = await conexao.promise().execute(SQL, [this._loanLeft, this._loanReturn, this._userId, this._bookId]);
             this._id = result.insertId;
             return result.affectedRows > 0;
         } catch (error) {
@@ -38,10 +38,10 @@ class Loan {
 
     async update() {
         const conexao = Banco.getConexao();
-        const SQL = 'UPDATE loan SET loan_left = ?, loan_return = ?, user_id = ?, bookss_id = ? WHERE id = ?;';
+        const SQL = 'UPDATE loan SET loan_left = ?, loan_return = ? WHERE id = ?;';
 
         try {
-            const [result] = await conexao.promise().execute(SQL, [this._loanLeft, this._loanReturn, this._userId, this._booksId, this._id]);
+            const [result] = await conexao.promise().execute(SQL, [this._loanLeft, this._loanReturn, this._id]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error('Erro ao atualizar o empréstimo:', error);
@@ -124,12 +124,12 @@ class Loan {
         return this;
     }
 
-    get booksId() {
-        return this._booksId;
+    get bookId() {
+        return this._bookId;
     }
 
-    set booksId(booksId) {
-        this._booksId = booksId;
+    set bookId(bookId) {
+        this._bookId = bookId;
         return this;
     }
 }
