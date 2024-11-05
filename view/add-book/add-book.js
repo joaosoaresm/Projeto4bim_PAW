@@ -43,3 +43,53 @@ document.getElementById("addBookForm").addEventListener("submit", function (even
         console.error("Error creating book:", error);
     });
 });
+
+// Enviar arquivo JSON para o backend
+document.getElementById("uploadBookForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const fileInput = document.getElementById("bookFile");
+    const file = fileInput.files[0];
+
+    if (file && file.type === "application/json") {
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+            try {
+                const data = JSON.parse(event.target.result);
+                
+                // Verifica se os campos title e author existem
+                if (data.title && data.author) {
+                    fetch(`/book/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify({ title: data.title, author: data.author })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Book created successfully from JSON!");
+                            fileInput.value = "";
+                        } else {
+                            alert("Failed to create book from JSON.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error creating book from JSON:", error);
+                    });
+                } else {
+                    alert("Invalid JSON format. The file must contain title and author fields.");
+                }
+            } catch (error) {
+                alert("Invalid JSON file.");
+                console.error("JSON parse error:", error);
+            }
+        };
+
+        reader.readAsText(file);
+    } else {
+        alert("Please upload a valid JSON file.");
+    }
+});
