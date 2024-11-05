@@ -37,10 +37,23 @@ class Book {
 
     async update() {
         const conexao = Banco.getConexao();
-        const SQL = 'UPDATE book SET title = ?, author = ?, available = ? WHERE id = ?;';
+        const SQL = 'UPDATE book SET title = ?, author = ? WHERE id = ?;';
 
         try {
-            const [result] = await conexao.promise().execute(SQL, [this._title, this._author, this._available, this._id]);
+            const [result] = await conexao.promise().execute(SQL, [this._title, this._author, this._id]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.error('Erro ao atualizar o livro:', error);
+            return false;
+        }
+    }
+
+    async updateAvailable() {
+        const conexao = Banco.getConexao();
+        const SQL = 'UPDATE book SET available = ? WHERE id = ?;';
+
+        try {
+            const [result] = await conexao.promise().execute(SQL, [this._available, this._id]);
             return result.affectedRows > 0;
         } catch (error) {
             console.error('Erro ao atualizar o livro:', error);

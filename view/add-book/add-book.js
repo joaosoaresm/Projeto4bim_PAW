@@ -3,7 +3,7 @@ window.onload = async function() {
 
     if (!token) {
         alert('Por favor, faça login para acessar esta página.');
-        window.location.href = '/login';
+        window.location.href = '/';
         return;
     }    
 };

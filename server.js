@@ -54,7 +54,14 @@ module.exports = class Server {
         app.use('/book-list',
             express.static(path.join(__dirname, '/view/book-list'))
         );
-        
+
+        app.use('/add-loan',
+            express.static(path.join(__dirname, '/view/add-loan'))
+        );
+
+        app.use('/loan-list',
+            express.static(path.join(__dirname, '/view/loan-list'))
+        );        
         
         //back
         app.use('/login',

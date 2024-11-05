@@ -36,7 +36,6 @@ module.exports = class BookControl {
         book.id = request.params.idBook;
         book.title = request.body.title;
         book.author = request.body.author;
-        book.available = request.body.available;
 
         const isUpdated = await book.update();
         const objResposta = {

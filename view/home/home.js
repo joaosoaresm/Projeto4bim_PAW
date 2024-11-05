@@ -29,6 +29,14 @@ document.getElementById('listUsersButton').addEventListener('click', () => {
     window.location.href = '/user-list';
 });
 
+document.getElementById('loanBookButton').addEventListener('click', () => {
+    window.location.href = '/add-loan';
+});
+
+document.getElementById('listLoansButton').addEventListener('click', () => {
+    window.location.href = '/loan-list';
+});
+
 document.getElementById("manageUserButton").addEventListener("click", () => {
     const userOptionsMenu = document.getElementById("userOptionsMenu");
     userOptionsMenu.classList.toggle("hidden-button");

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Book</title>
-    <link rel="stylesheet" href="add-book.css">
+    <title>Add Loan</title>
+    <link rel="stylesheet" href="add-loan.css">
 </head>
 <body>
     <!-- Header com Logo -->
@@ -22,18 +22,22 @@
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="user-list">
+    <main class="loan-list">
         <div class="modal-content">
-            <h2>Add Book</h2>
-            <form class="add-book-form" id="addBookForm">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author" required>
+            <h2>Add Loan</h2>
+            <form class="add-loan-form" id="addLoanForm">
+                <label for="left">Left Date:</label>
+                <input type="date" id="left" name="left" required>
+                <label for="return">Return Date:</label>
+                <input type="date" id="return" name="return" required>
+                <label for="userId">User Id:</label>
+                <input type="text" id="userId" name="userId" required>
+                <label for="bookId">Book Id:</label>
+                <input type="text" id="bookId" name="bookId" required>
                 <button type="submit">OK</button>
             </form>
         </div>
     </main>
-    <script src="add-book.js"></script>
+    <script src="add-loan.js"></script>
 </body>
 </html>

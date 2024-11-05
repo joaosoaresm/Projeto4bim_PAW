@@ -8,7 +8,7 @@ window.onload = async function() {
         return;
     }
 
-    await getBooks();
+    await getLoans();
 };
 
 document.getElementById('backButton').addEventListener('click', () => {
@@ -25,37 +25,37 @@ document.getElementById("addBookForm").addEventListener("submit", function (even
     event.preventDefault(); // Evita o envio padrão do formulário
 
     // Obtém os valores dos campos
-    const title = document.getElementById("title").value;
-    const author = document.getElementById("author").value;
+    const loanLeft = document.getElementById("left").value;
+	const loanReturn = document.getElementById("return").value;
 
-    fetch(`/book/${idSelected}`, {
+    fetch(`/loan/${idSelected}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ title, author })
+        body: JSON.stringify({ loanLeft, loanReturn })
     })
     .then(async response => {
         if (response.ok) {
-            alert("Book updated successfully!");
-            document.getElementById("title").value = "";
-            document.getElementById("author").value = "";
+            alert("Loan updated successfully!");
+            document.getElementById("left").value = "";
+            document.getElementById("return").value = "";
             const booksBody = document.getElementById('booksBody');
             booksBody.innerHTML = "";
-            await getBooks();
+            await getLoans();
         } else {
-            alert("Failed to update book.");
+            alert("Failed to update loan.");
         }
     })
     .catch(error => {
-        console.error("Error updating book:", error);
+        console.error("Error updating loan:", error);
     });
 });
 
-const getBooks = async () => {
+const getLoans = async () => {
     try {
-        const response = await fetch('/book', {
+        const response = await fetch('/loan', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -66,23 +66,24 @@ const getBooks = async () => {
         const data = await response.json();
 
         if (data.status) {
-            const booksBody = document.getElementById('booksBody');
-            data.book.forEach(book => {
+            const loansBody = document.getElementById('booksBody');
+            data.loans.forEach(loan => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${book.id}</td>
-                    <td>${book.title}</td>
-                    <td>${book.author}</td>
-                    <td>${book.available}</td>
-                    <td id="update-${book.id}" class="link">update</td>
-                    <td id="delete-${book.id}" class="link">delete</td>
+                    <td>${loan.id}</td>
+                    <td>${loan.loan_left}</td>
+                    <td>${loan.loan_return}</td>
+                    <td>${loan.User_id}</td>
+                    <td>${loan.Book_id}</td>
+                    <td id="update-${loan.id}" class="link">update</td>
+                    <td id="delete-${loan.id}" class="link">delete</td>
                 `;
-                booksBody.appendChild(row);
+                loansBody.appendChild(row);
                 
-                document.getElementById(`delete-${book.id}`).addEventListener('click', () => {
-                    if (confirm(`Are you sure you want to delete the book "${book.title}"?`)) {
+                document.getElementById(`delete-${loan.id}`).addEventListener('click', () => {
+                    if (confirm(`Are you sure you want to delete the loan?`)) {
                         // Realiza a requisição DELETE
-                        fetch(`/book/${book.id}`, {
+                        fetch(`/loan/${loan.id}`, {
                             method: 'DELETE',
                             headers: {
                                 'Authorization': `Bearer ${localStorage.getItem('token')}` // Inclua o token de autenticação se necessário
@@ -90,28 +91,28 @@ const getBooks = async () => {
                         })
                         .then(response => {
                             if (response.ok) {
-                                alert("Book deleted successfully!");
+                                alert("Loan deleted successfully!");
                                 row.remove();
                             } else {
-                                alert("Failed to delete book.");
+                                alert("Failed to delete loan.");
                             }
                         })
                         .catch(error => {
-                            console.error("Error deleting book:", error);
+                            console.error("Error deleting loan:", error);
                         });
                     }
                 });
 
-                document.getElementById(`update-${book.id}`).addEventListener("click", () => {
-                    idSelected = book.id;
+                document.getElementById(`update-${loan.id}`).addEventListener("click", () => {
+                    idSelected = loan.id;
                     document.getElementById("updateBookModal").classList.remove("hidden-modal");
                 });
             });
         } else {
-            alert(data.msg || 'Erro ao buscar livros.');
+            alert(data.msg || 'Error getting loans.');
         }
     } catch (error) {
-        console.error('Erro na requisição de listagem de livros:', error);
-        alert('Erro ao buscar livros. Tente novamente mais tarde.');
+        console.error('Error on loan list request:', error);
+        alert('Error getting loans. Please try again later.');
     }
 }

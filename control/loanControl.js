@@ -1,15 +1,24 @@
 const express = require('express');
 const Loan = require('../models/loan');
+const Book = require('../models/book');
 
 module.exports = class LoanControl {
     async create(request, response) {
         var loan = new Loan();
+        var book = new Book();
         loan.loanLeft = request.body.loanLeft;
         loan.loanReturn = request.body.loanReturn;
         loan.userId = request.body.userId;
         loan.bookId = request.body.bookId;
 
+        
+
         const isCreated = await loan.create();
+        if (isCreated) {
+            book.available = 0;
+            book.id = loan.bookId;
+            await book.updateAvailable();
+        }
         const objResposta = {
             cod: 1,
             status: isCreated,

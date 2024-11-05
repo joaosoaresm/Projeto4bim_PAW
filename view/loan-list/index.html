@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book List</title>
-    <link rel="stylesheet" href="book-list.css">
+    <title>Loan List</title>
+    <link rel="stylesheet" href="loan-list.css">
 </head>
 <body>
     <!-- Header com Logo -->
@@ -23,14 +23,15 @@
 
     <!-- Conteúdo Principal -->
     <main class="book-list">
-        <h2>Book List</h2>
+        <h2>Loan List</h2>
         <table id="booksTable">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Available</th>
+                    <th>Loan ID</th>
+                    <th>Left</th>
+                    <th>Return</th>
+                    <th>User ID</th>
+                    <th>Book ID</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -41,17 +42,17 @@
         <div id="updateBookModal" class="modal hidden-modal">
             <div class="modal-content">
                 <span id="closeModal" class="close-button">&times;</span>
-                <h2>Update Book</h2>
+                <h2>Update Loan</h2>
                 <form class="add-book-form" id="addBookForm">
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required>
-                    <label for="author">Author:</label>
-                    <input type="text" id="author" name="author" required>
-                    <button type="submit">OK</button>
+                    <label for="left">Left Date:</label>
+                <input type="date" id="left" name="left" required>
+                <label for="return">Return Date:</label>
+                <input type="date" id="return" name="return" required>
+                <button type="submit">OK</button>
                 </form>
             </div>
         </div>
     </main>
-    <script src="book-list.js"></script>
+    <script src="loan-list.js"></script>
 </body>
 </html>
